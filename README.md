@@ -54,7 +54,25 @@ and teach.last_name != 'Admin'  -- removes 17-18 sections with no scheduled stud
 and teach.last_name != 'Legagneur'
 
 ----------------------Grade Comments
+select
+sch.abbreviation as School,
+st.lastfirst AS StudentName,
+cc.ID AS StudentID,
+t.lastfirst as Teacher,
+crs.course_name as Course,
+cc.section_number AS Section,
+sec.comment_value as CommentValue
 
+from cc
+JOIN schools sch on sch.school_number = cc.schoolid
+JOIN courses crs on crs.course_number = cc.course_number
+JOIN teachers t on t.id = cc.teacherid
+JOIN sections sec on sec.section_number = cc.section_number
+JOIN students st on st.student_number = cc.id
+
+where sch.school_number in (1000,1001,1002,1011,1014,2000)
+and sec.termid >=2700 -- limits to 17-18 sections
+and t.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 
 
 ----------------------Pull School, Teacher, Course, Section, Grade, Comment
