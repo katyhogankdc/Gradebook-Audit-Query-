@@ -53,7 +53,7 @@ and sec.termid >=2700 -- limits to 17-18 sections
 and teach.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 and teach.last_name != 'Legagneur'
 
-----------------------Grade Comments
+----------------------Grade Comments, including school, teacher, course, section
 select
 sch.abbreviation as School,
 st.lastfirst AS StudentName,
@@ -61,6 +61,7 @@ cc.ID AS StudentID,
 t.lastfirst as Teacher,
 crs.course_name as Course,
 cc.section_number AS Section,
+cc.finalgrades AS FinalGrade,
 sec.comment_value as CommentValue
 
 from cc
@@ -74,5 +75,3 @@ where sch.school_number in (1000,1001,1002,1011,1014,2000)
 and sec.termid >=2700 -- limits to 17-18 sections
 and t.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 
-
-----------------------Pull School, Teacher, Course, Section, Grade, Comment
