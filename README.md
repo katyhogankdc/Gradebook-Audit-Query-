@@ -39,7 +39,8 @@ sch.abbreviation as School
 ,crs.course_name as Course
 ,sec.section_number as Section
 ,teach.lastfirst as Teacher
-,asec.assignmentsectionid as AssignmentSectionID
+,asec.assignmentid AS AssignmentID
+,asec.name AS AssignmentName
 ,asec.weight AS Weight
 
 from sections sec
@@ -53,6 +54,7 @@ and sec.termid >=2700 -- limits to 17-18 sections
 and teach.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 and teach.last_name != 'Legagneur'
 
+order by sch.abbreviation, teach.lastfirst
 ----------------------Grade Comments, including school, teacher, course, section
 select
 sch.abbreviation as School,
