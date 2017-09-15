@@ -1,5 +1,7 @@
 # Gradebook-Audit-Query-
 
+```SQL
+-------------------Assignment Count by Teacher
 select
 sch.abbreviation as School
 ,crs.course_name as Course
@@ -30,3 +32,9 @@ and sec.termid >=2700 -- limits to 17-18 sections
 and t.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 group by crs.course_name, t.lastfirst, sch.abbreviation, sec.section_number
 order by sch.abbreviation, crs.course_name, t.lastfirst
+
+----------------------Assignment Weights, including school, teacher, course, section
+
+----------------------Grade Comments
+
+----------------------Pull School, Teacher, Course, Section, Grade, Comment
