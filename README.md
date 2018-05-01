@@ -1,4 +1,4 @@
-# Gradebook-Audit-Query-
+# Grades-
 
 ```SQL
 -------------------Assignment Count by Teacher
@@ -79,3 +79,25 @@ where sch.school_number in (1000,1001,1002,1011,1014,2000)
 --and sgsc.yearid >=19-- limits to 17-18 sections
 and t.last_name != 'Admin'  -- removes 17-18 sections with no scheduled students
 and crs.course_name != 'Attendance'
+
+----------------------Historical Grades by Student
+select 
+c.schoolid, 
+cs.course_name, 
+c.termid,
+s.student_number, 
+s.lastfirst,
+pg.finalgradename,
+pg.grade,
+--pg.percent,
+pg.startdate,
+pg.enddate
+from powerschool.powerschool_cc c
+JOIN powerschool.powerschool_students s on s.id = c.studentid
+JOIN powerschool.powerschool_pgfinalgrades pg on pg.sectionid = c.sectionid AND pg.studentid = c.studentid
+JOIN powerschool.powerschool_courses cs on cs.course_number = c.course_number
+where pg.startdate > '2013-07-01' and pg.enddate > '2014-08-01'
+and c.schoolid in (1000, 1001, 1002, 1011, 1014)
+order by c.schoolid, cs.course_name
+
+``
