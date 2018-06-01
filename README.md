@@ -113,14 +113,18 @@ asn.duedate
 ,sch.abbreviation
 ,crs.course_name
 ,d.name as "category name"
+--,d.defaultweight
 --,sec.expression
 --,asn.assignmentsectionid
 --,sec.termid
+,gcfw.weight
 FROM assignmentsection asn
 JOIN sections sec on sec.dcid = asn.sectionsdcid
+--JOIN assignmentstandardassoc ass on ass.assignmentid = asn.assignmentid
 JOIN assignmentcategoryassoc ac on ac.assignmentsectionid = asn.assignmentsectionid
 JOIN teachercategory tc on tc.teachercategoryid = ac.teachercategoryid
 JOIN districtteachercategory d on d.districtteachercategoryid = tc.districtteachercategoryid
+JOIN gradecalcformulaweight gcfw on gcfw.districtteachercategoryid = d.districtteachercategoryid
 JOIN schools sch on sch.school_number = sec.schoolid
 JOIN courses crs on crs.course_number = sec.course_number
 JOIN terms t on (asn.duedate BETWEEN t.firstday and t.lastday) and (t.schoolid = sec.schoolid)
@@ -130,5 +134,6 @@ and sec.termid >=2700 -- limits to 17-18 sections
 --d asn.assignmentsectionid = '85752'
 and t.abbreviation IN ('R1','R2', 'R3')
 order by sch.abbreviation, crs.credittype, asn.whocreated; 
+
 
 ``
