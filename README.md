@@ -100,4 +100,35 @@ where pg.startdate > '2013-07-01' and pg.enddate > '2014-08-01'
 and c.schoolid in (1000, 1001, 1002, 1011, 1014)
 order by c.schoolid, cs.course_name
 
+-----------------Assignment Data with Categories 
+select 
+asn.duedate
+,asn.name
+,asn.whocreated
+,asn.weight
+,asn.totalpointvalue
+,sec.grade_level
+,crs.credittype
+,t.abbreviation
+,sch.abbreviation
+,crs.course_name
+,d.name as "category name"
+--,sec.expression
+--,asn.assignmentsectionid
+--,sec.termid
+FROM assignmentsection asn
+JOIN sections sec on sec.dcid = asn.sectionsdcid
+JOIN assignmentcategoryassoc ac on ac.assignmentsectionid = asn.assignmentsectionid
+JOIN teachercategory tc on tc.teachercategoryid = ac.teachercategoryid
+JOIN districtteachercategory d on d.districtteachercategoryid = tc.districtteachercategoryid
+JOIN schools sch on sch.school_number = sec.schoolid
+JOIN courses crs on crs.course_number = sec.course_number
+JOIN terms t on (asn.duedate BETWEEN t.firstday and t.lastday) and (t.schoolid = sec.schoolid)
+WHERE asn.whocreated not in ('Legagneur, Cindy', 'Moore, Morgan','Raymond, Elizabeth')
+and sch.school_number in (1000,1001,1002,1011,1014,2000)
+and sec.termid >=2700 -- limits to 17-18 sections
+--d asn.assignmentsectionid = '85752'
+and t.abbreviation IN ('R1','R2', 'R3')
+order by sch.abbreviation, crs.credittype, asn.whocreated; 
+
 ``
